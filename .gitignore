@@ -13,6 +13,7 @@ logs
 npm-debug.log
 node_modules/*
 !node_modules/pmcrypto/
+!node_modules/pm-srp/
 po/template.pot
 src/app/config.js
 src/app/translations.js
