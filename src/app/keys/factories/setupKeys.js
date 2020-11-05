@@ -44,15 +44,26 @@ function setupKeys(Key, keysModel, memberApi) {
     }
 
     async function generate(addresses = [], password = '', encryptionConfigName = DEFAULT_ENCRYPTION_CONFIG) {
-        console.log('setupKeys.generate()');
+        console.log(`[Call] setupKeys.generate()
+addresses: ${JSON.stringify(addresses)}
+password: ${password}
+encryptionConfigName: ${encryptionConfigName}`);
+
         const keySalt = generateKeySalt();
         const mailboxPassword = await computeKeyPassword(password, keySalt);
 
-        return {
+        const keys = {
             mailboxPassword,
             keySalt,
             keys: await generateAddresses(addresses, mailboxPassword, encryptionConfigName)
         };
+
+        console.log(`[Return] setupKeys.generate()
+mailboxPassword: ${keys.mailboxPassword}
+keySalt: ${keys.keySalt}
+keys: ${JSON.stringify(keys.keys, null, 2)}`);
+
+        return keys;
     }
 
     /**
