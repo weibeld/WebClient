@@ -10,8 +10,9 @@ build
 dist
 karma-*
 logs
-node_modules
 npm-debug.log
+node_modules/*
+!node_modules/pmcrypto/
 po/template.pot
 src/app/config.js
 src/app/translations.js
