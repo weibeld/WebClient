@@ -23,6 +23,7 @@ function signupUserProcess(
     const dispatch = (type, data = {}) => dispatcher.signup(type, data);
 
     async function doCreateUser(model) {
+        console.log('signupUserProcess.doCreateUser()');
         dispatch('create.user', { value: true });
         try {
             const { data } = await signupModel.createUser(model);
@@ -49,12 +50,14 @@ function signupUserProcess(
     }
 
     function setUserLanguage() {
+        console.log('signupUserProcess.setUserLanguage()');
         if ($location.search().language) {
             return settingsApi.updateLocale({ Locale: gettextCatalog.getCurrentLanguage() });
         }
     }
 
     async function doLogUserIn() {
+        console.log('signupUserProcess.doLogUserIn()');
         dispatch('loguserin', { value: true });
         const credentials = {
             username: signupModel.get('username'),
@@ -64,6 +67,7 @@ function signupUserProcess(
     }
 
     async function doAccountSetup() {
+        console.log('signupUserProcess.doAccountSetup()');
         dispatch('setup.account', { value: true });
 
         const { data } = await Address.setup({ Domain: signupModel.getDomain() });
@@ -76,6 +80,7 @@ function signupUserProcess(
     }
 
     async function doGetUserInfo() {
+        console.log('signupUserProcess.doGetUserInfo()');
         dispatch('user.get', { value: true });
         await lazyLoader.app();
         return authentication.fetchUserInfo();
@@ -93,6 +98,7 @@ function signupUserProcess(
     }
 
     const doSubscription = async () => {
+        console.log('signupUserProcess.doSubscription()');
         // Attach subscription and catch any error to keep the same behavior as before (to redirect to the inbox).
         await attachSignupSubscription({
             planIds: signupModel.get('temp.planIds'),
@@ -115,6 +121,7 @@ function signupUserProcess(
     };
 
     function generateNewKeys() {
+        console.log('signupUserProcess.generateNewKeys()');
         dispatch('generate.newkeys', { value: true });
         return setupKeys
             .generate([{ ID: 0, Email: signupModel.getEmail() }], signupModel.getPassword())
@@ -122,6 +129,7 @@ function signupUserProcess(
     }
 
     const createAccount = (model) => {
+        console.log('signupUserProcess.createAccount()');
         dispatch('signup.error', { value: false });
         create(model).catch(() => {
             dispatch('signup.error', { value: true });

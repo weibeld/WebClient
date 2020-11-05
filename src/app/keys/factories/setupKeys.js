@@ -27,6 +27,7 @@ function setupKeys(Key, keysModel, memberApi) {
         passphrase = '',
         encryptionConfigName = DEFAULT_ENCRYPTION_CONFIG
     ) {
+        console.log('setupKeys.generateAddresses()');
         const list = addresses.map(({ ID, Email: email, Keys, Receive } = {}) => {
             return generateKey({
                 userIds: [{ name: email, email }],
@@ -43,6 +44,7 @@ function setupKeys(Key, keysModel, memberApi) {
     }
 
     async function generate(addresses = [], password = '', encryptionConfigName = DEFAULT_ENCRYPTION_CONFIG) {
+        console.log('setupKeys.generate()');
         const keySalt = generateKeySalt();
         const mailboxPassword = await computeKeyPassword(password, keySalt);
 
@@ -125,6 +127,7 @@ function setupKeys(Key, keysModel, memberApi) {
      * @return {Object}                      payload for API request
      */
     async function prepareSetupPayload(KeySalt = '', AddressKeys = [], newPassword = '') {
+        console.log('setupKeys.prepareSetupPayload()');
         const payload = { KeySalt };
 
         if (AddressKeys.length) {
@@ -228,6 +231,7 @@ function setupKeys(Key, keysModel, memberApi) {
      * @return {Object}                      API response to key setup
      */
     async function setup({ keySalt, keys }, password = '') {
+        console.log('setupKeys.setup()');
         const { payload, newPassword } = await prepareSetupPayload(keySalt, keys, password);
         return Key.setup(payload, newPassword).then(response);
     }

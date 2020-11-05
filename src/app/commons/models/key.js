@@ -18,6 +18,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const create = (params = {}) => {
+        console.log('Key.create()');
         return $http.post(requestURL(), params);
     };
     /**
@@ -27,6 +28,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const setup = (data = {}, Password = '') => {
+        console.log('Key.setup()');
         if (Password.length) {
             return srp.verify.post({ Password }, requestURL('setup'), data);
         }
@@ -40,6 +42,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const reset = (data = {}, Password = '') => {
+        console.log('Key.reset()');
         if (Password.length) {
             return srp.verify.post({ Password }, requestURL('reset'), data);
         }
@@ -51,7 +54,10 @@ function Key($http, url, srp) {
      * @param {Object} params
      * @return {Promise}
      */
-    const activate = (keyID, params = {}) => $http.put(requestURL(keyID, 'activate'), params);
+    const activate = (keyID, params = {}) => {
+        console.log('Key.activate()');
+        $http.put(requestURL(keyID, 'activate'), params);
+    };
     /**
      * Update private key only, use for password updates
      * @param {Object} data
@@ -59,6 +65,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const updatePrivate = (data = {}, Password = '') => {
+        console.log('Key.updatePrivate()');
         if (Password.length) {
             return srp.verify.put({ Password }, requestURL('private'), data);
         }
@@ -71,6 +78,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const upgrade = (data = {}, Password = '') => {
+        console.log('Key.upgrade()');
         if (Password.length) {
             return srp.verify.post({ Password }, requestURL('private', 'upgrade'), data);
         }
@@ -83,6 +91,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const primary = (keyID, params) => {
+        console.log('Key.primary()');
         return $http.put(requestURL(keyID, 'primary'), params);
     };
     /**
@@ -92,6 +101,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const remove = (keyID, params) => {
+        console.log('Key.remove()');
         return $http.put(requestURL(keyID, 'delete'), params);
     };
     /**
@@ -99,6 +109,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const salts = (config) => {
+        console.log('Key.salts()');
         return $http.get(requestURL('salts'), config).then(unload);
     };
     /**
@@ -109,6 +120,7 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const flags = (keyID, params) => {
+        console.log('Key.flags()');
         return $http.put(requestURL(keyID, 'flags'), params);
     };
     /**
@@ -116,7 +128,10 @@ function Key($http, url, srp) {
      * @param {String} keyID
      * @return {Promise}
      */
-    const reactivate = (keyID, params) => $http.put(requestURL(keyID), params);
+    const reactivate = (keyID, params) => {
+        console.log('Key.reactivate()');
+        $http.put(requestURL(keyID), params);
+    };
 
     return { keys, create, setup, reset, primary, activate, updatePrivate, upgrade, remove, salts, reactivate, flags };
 }

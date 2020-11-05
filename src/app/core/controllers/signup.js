@@ -94,11 +94,13 @@ function SignupController(
     };
 
     const createAccount = () => {
+        console.log('SignupController.createAccount()');
         setStep(5);
         signupUserProcess.createAccount($scope.account);
     };
 
     const generateUserKeys = async () => {
+        console.log('SignupController.generateUserKeys()');
         await networkActivityTracker.track(signupUserProcess.generateNewKeys());
 
         if (AppModel.is('preInvited')) {
