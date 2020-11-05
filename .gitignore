@@ -32,3 +32,4 @@ env/i18n.txt
 coverage/
 .env
 appConfig.json
+.git/hooks/pre-commit*
