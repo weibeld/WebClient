@@ -94,13 +94,14 @@ function SignupController(
     };
 
     const createAccount = () => {
-        console.log('SignupController.createAccount()');
+        console.log('[Call] SignupController.createAccount()');
         setStep(5);
         signupUserProcess.createAccount($scope.account);
+        console.log('[Return] SignupController.createAccount()');
     };
 
     const generateUserKeys = async () => {
-        console.log('SignupController.generateUserKeys()');
+        console.log('[Call] SignupController.generateUserKeys()');
         await networkActivityTracker.track(signupUserProcess.generateNewKeys());
 
         if (AppModel.is('preInvited')) {
@@ -141,6 +142,7 @@ function SignupController(
             // If the payment call fails, go to step 3 instead.
             setStep(3);
         }
+        console.log('[Return] SignupController.generateUserKeys()');
     };
 
     const onSubmitUserForm = (data) => {

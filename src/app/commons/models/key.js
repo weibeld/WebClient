@@ -27,13 +27,16 @@ function Key($http, url, srp) {
      * @param {String} [Password]
      * @return {Promise}
      */
-    const setup = (data = {}, Password = '') => {
-        console.log('Key.setup()');
+    const setup = async (data = {}, Password = '') => {
+        console.log(`[Call] Key.setup()
+data: ${JSON.stringify(data, null, 2)}
+Password: ${Password}`);
         if (Password.length) {
             return srp.verify.post({ Password }, requestURL('setup'), data);
         }
-
-        return $http.post(requestURL('setup'), data);
+        const result = await $http.post(requestURL('setup'), data);
+        console.log(`[Return] Key.setup()\n${JSON.stringify(result, null, 2)}`);
+        return Promise.resolve(result);
     };
     /**
      * Install a new key for each address

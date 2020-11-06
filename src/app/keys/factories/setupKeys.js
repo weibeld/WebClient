@@ -138,7 +138,10 @@ keys: ${JSON.stringify(keys.keys, null, 2)}`);
      * @return {Object}                      payload for API request
      */
     async function prepareSetupPayload(KeySalt = '', AddressKeys = [], newPassword = '') {
-        console.log('setupKeys.prepareSetupPayload()');
+        console.log(`[Call] setupKeys.prepareSetupPayload()
+KeySalt: ${KeySalt}
+AddressKeys: ${JSON.stringify(AddressKeys)}
+newPassword: ${newPassword}`);
         const payload = { KeySalt };
 
         if (AddressKeys.length) {
@@ -162,13 +165,17 @@ keys: ${JSON.stringify(keys.keys, null, 2)}`);
         }
 
         if (newPassword.length) {
-            return { payload, newPassword };
+            const result = { payload, newPassword };
+            console.log(`[Return] setupKeys.prepareSetupPayload()\n${result}`);
+            return result;
         }
 
-        return {
-            payload,
-            newPassword: ''
+        const result = {
+          payload,
+          newPassword: ''
         };
+        console.log(`[Return] setupKeys.prepareSetupPayload()\n${result}`);
+        return result;
     }
 
     /**
@@ -242,9 +249,17 @@ keys: ${JSON.stringify(keys.keys, null, 2)}`);
      * @return {Object}                      API response to key setup
      */
     async function setup({ keySalt, keys }, password = '') {
-        console.log('setupKeys.setup()');
+        console.log(`[Call] setupKeys.setup()
+{
+  keySalt: ${keySalt}
+  keys: ${JSON.stringify(keys, null, 2)}
+}
+password: ${password}`);
         const { payload, newPassword } = await prepareSetupPayload(keySalt, keys, password);
-        return Key.setup(payload, newPassword).then(response);
+        const result = await Key.setup(payload, newPassword).then(response);
+
+        console.log(`[Return] setupKeys.setup()\n${JSON.stringify(result, null, 2)}`);
+        return Promise.resolve(result);
     }
 
     /**

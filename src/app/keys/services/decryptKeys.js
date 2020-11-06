@@ -5,6 +5,13 @@ import { decryptAddressKeyToken, getKeyInfo } from '../../../helpers/key';
 
 /* @ngInject */
 function decryptKeys(notification, Key, keysModel, setupKeys, gettextCatalog, translator) {
+    console.log(`[Call] decryptKeys()
+notification: ${JSON.stringify(notification)}
+Key: ${JSON.stringify(Key)}
+keysModel: ${JSON.stringify(keysModel)}
+setupKeys: ${JSON.stringify(setupKeys)}
+gettextCatalog: ${JSON.stringify(gettextCatalog)}
+translator: ${JSON.stringify(translator)}`);
     const I18N = translator(() => ({
         errorPrimaryKey({ Email: email = '' }) {
             return gettextCatalog.getString(
@@ -126,6 +133,7 @@ function decryptKeys(notification, Key, keysModel, setupKeys, gettextCatalog, tr
             { promises: [], dirtyAddresses: [] }
         );
 
+        console.log(`[Return] decryptKeys()`);
         return Promise.all(promises).then((addressKeys) => {
             return {
                 keys: primaryKeys.concat(addressKeys),

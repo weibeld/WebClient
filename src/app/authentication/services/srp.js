@@ -45,6 +45,7 @@ function srp(compatApi) {
      * @return {Promise} - That resolves to the result of the $http call
      */
     const verify = async (legacyCredentials, config) => {
+        console.log(`[Call] srp.verify()`);
         return srpVerify({
             api: compatApi,
             credentials: convertLegacyCredentials(legacyCredentials),

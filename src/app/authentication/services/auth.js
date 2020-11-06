@@ -27,6 +27,7 @@ function authentication(
     const { dispatcher } = dispatchers(['setUser']);
 
     const getUserInfo = async (userResult) => {
+        console.log(`[Call] authentication.getUserInfo()\nuserResult: ${JSON.stringify(userResult)}`);
         const user = userResult || (await User.get());
 
         // Redirect to setup if necessary
@@ -68,6 +69,7 @@ function authentication(
             await activateKeys(addresses, mailboxPassword);
         }
 
+        console.log(`[Return] authentication.getUserInfo()\n${JSON.stringify(user, null, 2)}`);
         return user;
     };
 
@@ -83,12 +85,15 @@ function authentication(
      * @returns {Promise}
      */
     const loginWithCookies = async (credentials) => {
+        console.log(`[Call] authentication.loginWithCookies()\ncredentials: ${JSON.stringify(credentials, null, 2)}`);
         const { UID, AccessToken, RefreshToken } = await login(credentials);
         await authApi.cookies({ UID, AccessToken, RefreshToken }, getAuthHeaders({ UID, AccessToken }));
         setUID(UID);
+        console.log('[Return] authentication.loginWithCookies()');
     };
 
     const fetchUserInfo = async () => {
+        console.log('[Call] authentication.fetchUserInfo()');
         try {
             const plainMailboxPass = tempStorage.getItem('plainMailboxPass');
             const userResult = tempStorage.getItem('userResult');
@@ -108,6 +113,7 @@ function authentication(
                 });
             }
 
+            console.log(`[Return] authentication.fetchUserInfo()\n${JSON.stringify(user, null, 2)}`);
             return user;
         } catch (error) {
             // If initializing the sessions fails from login or from f5 refresh, redirect to login.
@@ -151,6 +157,7 @@ function authentication(
         setUID,
         getUID,
         setPassword(password) {
+            console.log(`[Call] authentication.setPassword()\npassword: ${password}`);
             // Never save mailbox password changes if sub user
             if (this.user && this.user.OrganizationPrivateKey) {
                 return;

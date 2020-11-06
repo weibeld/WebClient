@@ -17,7 +17,12 @@ function Address($http, url) {
      * @param {Object} address
      * @return {Promise}
      */
-    const setup = (params) => $http.post(requestUrl('setup'), params);
+    const setup = async (params) => {
+      console.log(`[Call] Address.setup()\nparams: ${JSON.stringify(params)}`);
+      const result = await $http.post(requestUrl('setup'), params);
+      console.log(`[Return] Address.setup()\n${JSON.stringify(result)}`);
+      return Promise.resolve(result);
+    }
 
     /**
      * Edit address
