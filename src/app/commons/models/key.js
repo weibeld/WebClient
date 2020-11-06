@@ -28,14 +28,19 @@ function Key($http, url, srp) {
      * @return {Promise}
      */
     const setup = async (data = {}, Password = '') => {
-        console.log(`[Call] Key.setup()
-data: ${JSON.stringify(data, null, 2)}
-Password: ${Password}`);
+        console.log(`[Call] Key.setup()`);
+//data: ${JSON.stringify(data, null, 2)}
+//Password: ${Password}`);
         if (Password.length) {
             return srp.verify.post({ Password }, requestURL('setup'), data);
         }
+        console.log(`[Executing] Key.setup()
+KeySalt: ${data.KeySalt}
+PrimaryKey: ${data.PrimaryKey}
+Signature: ${data.AddressKeys[0].SignedKeyList.Signature}`);
+        // Check the HTTP POST request in the Chrome dev tools to see what's submitted to the ProtonMail API
         const result = await $http.post(requestURL('setup'), data);
-        console.log(`[Return] Key.setup()\n${JSON.stringify(result, null, 2)}`);
+        console.log(`[Return] Key.setup()`);//\n${JSON.stringify(result, null, 2)}`);
         return Promise.resolve(result);
     };
     /**

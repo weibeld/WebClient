@@ -23,7 +23,7 @@ function signupUserProcess(
     const dispatch = (type, data = {}) => dispatcher.signup(type, data);
 
     async function doCreateUser(model) {
-        console.log(`[Call] signupUserProcess.doCreateUser()\n${JSON.stringify(model, null, 2)}`);
+        console.log(`[Call] signupUserProcess.doCreateUser()`);//\n${JSON.stringify(model, null, 2)}`);
         dispatch('create.user', { value: true });
         try {
             const { data } = await signupModel.createUser(model);
@@ -137,14 +137,14 @@ function signupUserProcess(
             .generate([{ ID: 0, Email: signupModel.getEmail() }], signupModel.getPassword())
             .then((result) => (CACHE.setupPayload = result));
 
-        console.log(`[Return] signupUserProcess.generateNewKeys()\n${JSON.stringify(result, null, 2)}`);
+        console.log(`[Return] signupUserProcess.generateNewKeys()`);//\n${JSON.stringify(result, null, 2)}`);
 
         return Promise.resolve(result);
     }
 
     const createAccount = (model) => {
-        console.log(`[Call] signupUserProcess.createAccount()
-model: ${JSON.stringify(model, null, 2)}`);
+        console.log(`[Call] signupUserProcess.createAccount()`);
+//model: ${JSON.stringify(model, null, 2)}`);
         dispatch('signup.error', { value: false });
         create(model).catch(() => {
             dispatch('signup.error', { value: true });

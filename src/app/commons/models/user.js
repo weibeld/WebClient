@@ -3,15 +3,15 @@ function User($http, url, srp) {
     const requestURL = url.build('users');
 
     const create = async (data, Password) => {
-        console.log(`[Call] User.create()
-data: ${JSON.stringify(data, null, 2)}
-password: ${Password}`);
+        console.log(`[Call] User.create()`);
+//data: ${JSON.stringify(data, null, 2)}
+//Password: ${Password}`);
         const result = await srp.verify.post({ Password }, requestURL(), data);
         console.log(`[Return] User.create()\n${JSON.stringify(result, null, 2)}`);
         return Promise.resolve(result);
     };
     const get = async (config = {}) => {
-        console.log(`[Call] User.get()\nconfig: ${JSON.stringify(config, null, 2)}`);
+        console.log(`[Call] User.get()`);//\nconfig: ${JSON.stringify(config, null, 2)}`);
         const result = await $http.get(requestURL(), config).then(({ data = {} } = {}) => data.User);
         console.log(`[Return] User.get()\n${JSON.stringify(result, null, 2)}`);
         return Promise.resolve(result);

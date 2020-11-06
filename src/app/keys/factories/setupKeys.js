@@ -27,7 +27,7 @@ function setupKeys(Key, keysModel, memberApi) {
         passphrase = '',
         encryptionConfigName = DEFAULT_ENCRYPTION_CONFIG
     ) {
-        console.log('setupKeys.generateAddresses()');
+        console.log('[Call] setupKeys.generateAddresses()');
         const list = addresses.map(({ ID, Email: email, Keys, Receive } = {}) => {
             return generateKey({
                 userIds: [{ name: email, email }],
@@ -58,10 +58,10 @@ encryptionConfigName: ${encryptionConfigName}`);
             keys: await generateAddresses(addresses, mailboxPassword, encryptionConfigName)
         };
 
-        console.log(`[Return] setupKeys.generate()
-mailboxPassword: ${keys.mailboxPassword}
-keySalt: ${keys.keySalt}
-keys: ${JSON.stringify(keys.keys, null, 2)}`);
+        console.log(`[Return] setupKeys.generate()`);
+//mailboxPassword: ${keys.mailboxPassword}
+//keySalt: ${keys.keySalt}
+//keys: ${JSON.stringify(keys.keys, null, 2)}`);
 
         return keys;
     }
@@ -138,16 +138,20 @@ keys: ${JSON.stringify(keys.keys, null, 2)}`);
      * @return {Object}                      payload for API request
      */
     async function prepareSetupPayload(KeySalt = '', AddressKeys = [], newPassword = '') {
-        console.log(`[Call] setupKeys.prepareSetupPayload()
-KeySalt: ${KeySalt}
-AddressKeys: ${JSON.stringify(AddressKeys)}
-newPassword: ${newPassword}`);
+        console.log(`[Call] setupKeys.prepareSetupPayload()`);
+//KeySalt: ${KeySalt}
+//AddressKeys: ${JSON.stringify(AddressKeys)}
+//newPassword: ${newPassword}`);
         const payload = { KeySalt };
 
         if (AddressKeys.length) {
             const passphrase = await computeKeyPassword(newPassword, KeySalt);
 
             payload.PrimaryKey = AddressKeys[0].PrivateKey;
+            console.log(`[Executing] setupKeys.prepareSetupPayload()
+KeySalt: ${KeySalt}
+Encrypted private key:
+${AddressKeys[0].PrivateKey}`);
 
             payload.AddressKeys = await Promise.all(
                 AddressKeys.map(async ({ AddressID, Receive, PrivateKey, Keys }) => ({
@@ -166,7 +170,7 @@ newPassword: ${newPassword}`);
 
         if (newPassword.length) {
             const result = { payload, newPassword };
-            console.log(`[Return] setupKeys.prepareSetupPayload()\n${result}`);
+            console.log(`[Return] setupKeys.prepareSetupPayload()\n${JSON.stringify(result, null, 2)}`);
             return result;
         }
 
@@ -174,7 +178,7 @@ newPassword: ${newPassword}`);
           payload,
           newPassword: ''
         };
-        console.log(`[Return] setupKeys.prepareSetupPayload()\n${result}`);
+        console.log(`[Return] setupKeys.prepareSetupPayload()\n${JSON.stringify(result, null, 2)}`);
         return result;
     }
 
@@ -249,16 +253,21 @@ newPassword: ${newPassword}`);
      * @return {Object}                      API response to key setup
      */
     async function setup({ keySalt, keys }, password = '') {
-        console.log(`[Call] setupKeys.setup()
-{
-  keySalt: ${keySalt}
-  keys: ${JSON.stringify(keys, null, 2)}
-}
-password: ${password}`);
+        console.log(`[Call] setupKeys.setup()`);
+//{
+//  keySalt: ${keySalt}
+//  keys: ${JSON.stringify(keys, null, 2)}
+//}
+//password: ${password}`);
+        console.log(`[Executing] setupKeys.setup()
+keySalt: ${keySalt}
+AddressID: ${keys[0].AddressID}
+PrivateKey:
+${keys[0].PrivateKey}`);
         const { payload, newPassword } = await prepareSetupPayload(keySalt, keys, password);
         const result = await Key.setup(payload, newPassword).then(response);
 
-        console.log(`[Return] setupKeys.setup()\n${JSON.stringify(result, null, 2)}`);
+        console.log(`[Return] setupKeys.setup()`);//\n${JSON.stringify(result, null, 2)}`);
         return Promise.resolve(result);
     }
 
