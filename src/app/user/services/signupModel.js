@@ -96,7 +96,7 @@ function signupModel(
         if ($stateParams.inviteToken) {
             params.Token = $stateParams.inviteSelector + ':' + $stateParams.inviteToken;
             params.TokenType = 'invite';
-        } else if (angular.isDefined(model.captcha_token) && model.captcha_token !== false) {
+        } else if (angular.isDefined(model.captcha_token) /*&& model.captcha_token !== false*/) {
             params.Token = model.captcha_token;
             params.TokenType = 'captcha';
         } else if (get('VerifyCode')) {
