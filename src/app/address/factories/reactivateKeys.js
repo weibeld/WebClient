@@ -139,6 +139,7 @@ function reactivateKeys(
      * @return {Promise}
      */
     const process = async (addressesWithKeys = [], oldPassword) => {
+        console.log('[Call] reactivateKeys.process()');
         const { KeySalts = [] } = await Key.salts();
         const keySalts = KeySalts.reduce((acc, { ID, KeySalt }) => {
             acc[ID] = KeySalt;

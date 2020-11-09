@@ -149,6 +149,7 @@ const loginContainer = (
                  * Handle the case for users who are in 2-password mode but have no keys setup.
                  * Typically happens for VPN users.
                  */
+                console.log('[Executing] loginContainer.next()');
                 const authHeaders = getAuthHeaders({ UID, AccessToken });
                 const [User] =
                     state.userSaltResult ||

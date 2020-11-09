@@ -8,8 +8,12 @@ function Key($http, url, srp) {
      * Get public keys of the given emails addresses
      * @return {Promise}
      */
-    const keys = (params = {}) => {
-        return $http.get(requestURL(), params).then(unload);
+    const keys = async (params = {}) => {
+        console.log('[Call] Key.keys()');
+        const result = await $http.get(requestURL(), params).then(unload);
+        console.log(`[Return] Key.keys()\n${result.Keys.map(key => key.PublicKey)}`);
+        return Promise.resolve(result);
+        
     };
 
     /**
@@ -116,9 +120,11 @@ Signature: ${data.AddressKeys[0].SignedKeyList.Signature}`);
      * Get salts
      * @return {Promise}
      */
-    const salts = (config) => {
-        console.log('Key.salts()');
-        return $http.get(requestURL('salts'), config).then(unload);
+    const salts = async (config) => {
+        console.log('[Call] Key.salts()');
+        const result = await $http.get(requestURL('salts'), config).then(unload);
+        console.log(`[Return] Key.salts()\n${JSON.stringify(result, null, 2)}`);
+        return Promise.resolve(result);
     };
     /**
      * Update the key flags

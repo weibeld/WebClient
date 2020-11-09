@@ -27,7 +27,7 @@ function authentication(
     const { dispatcher } = dispatchers(['setUser']);
 
     const getUserInfo = async (userResult) => {
-        console.log(`[Call] authentication.getUserInfo()\nuserResult: ${JSON.stringify(userResult)}`);
+        console.log(`[Call] authentication.getUserInfo()\nuserResult: ${JSON.stringify(userResult, null, 2)}`);
         const user = userResult || (await User.get());
 
         // Redirect to setup if necessary
