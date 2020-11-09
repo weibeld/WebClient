@@ -4,6 +4,25 @@
 
 Official AngularJS web client for the [ProtonMail secure email service](https://protonmail.com). ProtonMail also makes use of [OpenPGPjs](https://github.com/openpgpjs/openpgpjs) as our message cryptography is PGP compliant.
 
+## 👉 Fork Notes
+
+This is a fork of <https://github.com/ProtonMail/WebClient> mainly with added output statements for tracing the execution of the program.
+
+### Usage
+
+```bash
+npm install
+npm start
+```
+
+Then, go to <http://localhost:8080>.
+
+To better observe the execution of the code in Google Chrome, set the following settings in the [Chrome Dev Tools](https://developers.google.com/web/tools/chrome-devtools):
+
+1. Console > Settings > Preserve log _(check)_
+2. Network > Preserve log _(check)_
+3. Network > Filter > enter `-method:OPTIONS` (suppresses the _OPTIONS_ HTTP requests)
+
 ## Translation
 
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/protonmail/localized.svg)](https://crowdin.com/project/protonmail)
